@@ -6,7 +6,7 @@ import javax.persistence.Id;
 
 import org.modelmapper.ModelMapper;
 
-import br.com.rentHere.model.dto.UserDto;
+import br.com.rentHere.dto.UserDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -23,8 +23,14 @@ public class User {
 	private String email;
 	private String phoneNumber;
 	
-	public User setTOEntity(UserDto userDto) {
+	public User convertDtoToEntity(UserDto userDto) {
 		ModelMapper mapper = new ModelMapper();
 		return mapper.map(userDto, User.class);
 	}
+
+	public User(Long id) {
+		this.id = id;
+	}
+	
+	
 }
