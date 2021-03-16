@@ -19,7 +19,7 @@ import br.com.rentHere.dto.UserUpdateDto;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class UserControllerTest {
+public class RentControllerTest {
 	private static final String APPLICATION_JSON = "application/json";
 	private static final String URL = "http://localhost:8080/v1/rent/user/";
 	private static final String URL_USER_ID = "http://localhost:8080/v1/rent/user/1";
