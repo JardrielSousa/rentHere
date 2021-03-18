@@ -67,7 +67,7 @@ public class CarController {
 
 	@PutMapping("/{id}")
 	@ResponseBody
-	public ResponseEntity<?> updateUser(@Valid @PathVariable("id") Long id, @RequestBody CarUpdateDto carUpdateDto) {
+	public ResponseEntity<?> updateCar(@Valid @PathVariable("id") Long id, @RequestBody CarUpdateDto carUpdateDto) {
 		Optional<Car> doc = carService.getCarById(id);
 		Car newCar = new Car();
 		if(doc.isPresent()) {
@@ -78,10 +78,10 @@ public class CarController {
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Car());
 	}
 
-	@DeleteMapping
+	@DeleteMapping("/{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	@ResponseBody
-	public void updateCar(@Valid @PathVariable Long id) {
+	public void deleteCar(@Valid @PathVariable("id")  Long id) {
 		log.info("analising data ... ");
 		carService.deleteCar(id);
 	}

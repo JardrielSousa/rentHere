@@ -40,7 +40,7 @@ public class RentControllerTest {
 	public void test02InsertUserWithError() throws JsonProcessingException, Exception {
 		mock.perform(post(URL)
 				.contentType(APPLICATION_JSON)
-				.content(objectMapper.writeValueAsString(new UserDto("test", "test", ""))))
+				.content(objectMapper.writeValueAsString(new UserDto("", "test", ""))))
 		.andExpect(status().is4xxClientError());
 	}
 	

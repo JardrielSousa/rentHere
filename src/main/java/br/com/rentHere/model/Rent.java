@@ -39,11 +39,11 @@ public class Rent {
 	@Enumerated(EnumType.STRING)
 	private Payment payment;
 	
-	@OneToOne(cascade = CascadeType.DETACH)
+	@OneToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 	
-	@OneToOne(cascade = CascadeType.DETACH)
+	@OneToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "car_id", referencedColumnName = "id")
     private Car car;
 

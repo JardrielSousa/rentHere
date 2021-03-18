@@ -4,7 +4,6 @@ import java.util.Optional;
 
 import javax.validation.Valid;
 
-import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -21,8 +20,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.rentHere.dto.CarDto;
-import br.com.rentHere.dto.CarUpdateDto;
 import br.com.rentHere.dto.RentDto;
 import br.com.rentHere.dto.RentUpdateDto;
 import br.com.rentHere.model.Car;
