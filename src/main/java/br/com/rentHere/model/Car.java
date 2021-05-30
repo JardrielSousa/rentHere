@@ -6,6 +6,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import org.hibernate.envers.AuditTable;
+import org.hibernate.envers.Audited;
 import org.modelmapper.ModelMapper;
 
 import br.com.rentHere.dto.CarDto;
@@ -17,9 +19,11 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
+@Audited
+@AuditTable(value = "car_aud")
 public class Car {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	@Column(unique = true)
 	private String plaque;

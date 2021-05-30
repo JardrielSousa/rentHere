@@ -1,77 +1,83 @@
 package br.com.rentHere.controller;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.assertj.core.api.Assertions.assertThatNullPointerException;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.mockito.Mock;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
-import br.com.rentHere.dto.UserDto;
-import br.com.rentHere.dto.UserUpdateDto;
+import br.com.rentHere.model.Car;
+import br.com.rentHere.serviceImpl.CarServiceImpl;
 
 @SpringBootTest
 @AutoConfigureMockMvc
 public class CarControllerTest {
-	private static final String APPLICATION_JSON = "application/json";
-	private static final String URL = "http://localhost:8080/v1/rent/user/";
-	private static final String URL_USER_ID = "http://localhost:8080/v1/rent/user/1";
-	@Autowired
-	private MockMvc mock;
-	@Autowired
-    private ObjectMapper objectMapper;
+
+	@Mock
+	private CarServiceImpl carService;
+	
+	@Mock
+	private RestTemplate restTemplate;
 
 	@Test
-	public void test01InsertUserWithSucess() throws JsonProcessingException, Exception {
-		mock.perform(post(URL)
-				.contentType(APPLICATION_JSON)
-				.content(objectMapper.writeValueAsString(newUser())))
-		.andExpect(status().isCreated());
+	public void test01InsertCarWithSucess() throws JsonProcessingException, Exception {
+		Car car = newCar();
+		when(carService.insertCar(car)).thenReturn(car);
+		
+		Car carSaved = carService.insertCar(car);
+		assertEquals(car.getId(), carSaved.getId());
 	}
 
 	@Test
 	public void test02InsertUserWithError() throws JsonProcessingException, Exception {
-		mock.perform(post(URL)
-				.contentType(APPLICATION_JSON)
-				.content(objectMapper.writeValueAsString(new UserDto("test", "test", ""))))
-		.andExpect(status().is4xxClientError());
-	}
-	
-	@Test
-	public void test03UpdateUserWithSucess() throws JsonProcessingException, Exception {
-		mock.perform(put(URL_USER_ID)
-				.contentType(APPLICATION_JSON)
-				.content(objectMapper.writeValueAsString(updateUser())))
-		.andExpect(status().isNoContent());
+		Car car = new Car();
+		when(carService.insertCar(car)).thenReturn(car);
+		assertThatNullPointerException();
 	}
 
 	@Test
-	public void test04UpdateUserWithError() throws JsonProcessingException, Exception {
-		mock.perform(put(URL)
-				.contentType(APPLICATION_JSON)
-				.content(objectMapper.writeValueAsString(new UserUpdateDto(null,"test user", "test@gmail.com", "00000000"))))
-		.andExpect(status().is4xxClientError());
+	public void test03UpdateUserWithSucess() throws JsonProcessingException, Exception {
+		Car carUpdate = updateCar();
+		when(carService.updateCar(carUpdate)).thenReturn(carUpdate);
+		
+		Car carSaved = carService.updateCar(carUpdate);
+		assertEquals(carUpdate.getId(), carSaved.getId());
+	}
+
+	@Test
+	public void test04UpdateUserWitherror() throws JsonProcessingException, Exception {
+		Car carUpdate = new Car(null, "abc1234", "corsa", 60.0, null);
+		when(carService.updateCar(carUpdate)).thenReturn(carUpdate);
+		assertThatNullPointerException();
 	}
 	
 	@Test
-	public void test05DeleteUserWithSucess() throws JsonProcessingException, Exception {
-		mock.perform(delete(URL_USER_ID)
-				.contentType(APPLICATION_JSON))
-		.andExpect(status().is4xxClientError());
+	public void test04DeleteUserWithSucess() throws JsonProcessingException, Exception {
+		Optional<Car> car = Optional.of(newCar());
+		when(carService.getCarById(1L)).thenReturn(car);
+		
+		carService.deleteCar(car.get().getId());
+	    verify(carService, times(1)).deleteCar(1L);
+
 	}
 	
-	private UserDto newUser() {
-		return new UserDto("test user", "test@gmail.com", "00000000000");
+	private Car newCar() {
+		return new Car(1L, "abc1234", "corsa", 60.0, 1L);
 	}
 	
-	private UserUpdateDto updateUser() {		
-		return new UserUpdateDto(1L,"test user", "test@gmail.com", "000000000");
+	private Car updateCar() {
+		Car carUpdate = newCar();
+		carUpdate.setModel("Mob fiat");
+		return carUpdate;
 	}
 }

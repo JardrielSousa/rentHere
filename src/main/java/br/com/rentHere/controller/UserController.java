@@ -19,6 +19,7 @@ import br.com.rentHere.dto.UserDto;
 import br.com.rentHere.dto.UserUpdateDto;
 import br.com.rentHere.model.User;
 import br.com.rentHere.service.UserService;
+import br.com.rentHere.serviceImpl.UserServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -29,7 +30,7 @@ public class UserController {
 	
 	private UserService userService;
 	
-	public UserController(UserService userService) {
+	public UserController(UserServiceImpl userService) {
 		this.userService = userService;
 	}
 

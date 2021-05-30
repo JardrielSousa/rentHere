@@ -28,6 +28,9 @@ import br.com.rentHere.model.User;
 import br.com.rentHere.service.CarService;
 import br.com.rentHere.service.RentService;
 import br.com.rentHere.service.UserService;
+import br.com.rentHere.serviceImpl.CarServiceImpl;
+import br.com.rentHere.serviceImpl.RentServiceImpl;
+import br.com.rentHere.serviceImpl.UserServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -39,7 +42,7 @@ public class RentHereController {
 	private CarService carService;
 	private UserService userService;
 	
-	public RentHereController(RentService rentService,CarService carService,UserService userService) {
+	public RentHereController(RentServiceImpl rentService,CarServiceImpl carService,UserServiceImpl userService) {
 		this.rentService = rentService;
 		this.carService = carService;
 		this.userService = userService;

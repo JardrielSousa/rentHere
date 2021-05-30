@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import javax.validation.Valid;
 
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -25,7 +26,7 @@ import br.com.rentHere.dto.CarDto;
 import br.com.rentHere.dto.CarUpdateDto;
 import br.com.rentHere.model.Car;
 import br.com.rentHere.service.CarService;
-import lombok.extern.slf4j.Slf4j;
+import br.com.rentHere.serviceImpl.CarServiceImpl;
 
 @Slf4j
 @RestController
@@ -35,7 +36,7 @@ public class CarController {
 
 	private CarService carService;
 
-	public CarController(CarService carService) {
+	public CarController(CarServiceImpl carService) {
 		this.carService = carService;
 	}
 	
